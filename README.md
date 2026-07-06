@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="SOULEYMAN.PNG" alt="SOULEYMAN — AI Tutor for Mauritanian Students" width="220">
+<img src="SOULEYMAN.png" alt="SOULEYMAN — AI Tutor for Mauritanian Students" width="220">
 
 # SOULEYMAN
 ### The AI Private Tutor, Native to Hassaniya
