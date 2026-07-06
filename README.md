@@ -1,91 +1,165 @@
+<div align="center">
+
+<img src="SOULEYMAN.jpg" alt="SOULEYMAN — AI Tutor for Mauritanian Students" width="220">
+
 # SOULEYMAN
+### The AI Private Tutor, Native to Hassaniya
 
-**AI Tutor for Mauritanian Students, Powered by Dimeyz**
+**Status:** 🟢 In Production &nbsp;·&nbsp; **Version:** 1.0 &nbsp;·&nbsp; **Built by** [Alborda AI](https://alborda.ai)
 
-<!-- IMAGE: Insert SOULEYMAN product image/logo here -->
-<!-- ![SOULEYMAN](SOULEYMAN.png) -->
-
----
-
-## Overview
-
-SOULEYMAN is an AI-powered private tutor built by **Alborda AI** for Mauritanian students preparing the **Brevet**, the **Baccalauréat**, or a **national/professional entrance exam (Concours)**. It teaches in **Hassaniya** — the student's native language — both in writing and by voice, and is available around the clock.
-
-Unlike generic international tutoring apps translated into Arabic or French, SOULEYMAN is built natively for the Mauritanian student: it understands the local curriculum, speaks the local dialect, and adapts to each learner's level and pace.
-
-Powered by **Dimeyz**, Alborda AI's proprietary language model trained natively on Hassaniya, and **Dimeyz Speech** for voice interaction — all running on Alborda's own sovereign infrastructure, with no student data shared with third-party providers.
+</div>
 
 ---
 
-## Subjects Covered
+## 1. What is SOULEYMAN?
 
-| Subject | Levels |
+**SOULEYMAN** is Alborda AI's AI-powered private tutor for Mauritanian students preparing the **Brevet**, the **Baccalauréat**, or a **national entrance exam (Concours)**. Unlike generic international tutoring apps that translate content into approximate Arabic or French, SOULEYMAN is powered by **Dimeyz**, Alborda's proprietary large language model natively trained on **Hassaniya Arabic** — the everyday spoken language of Mauritania.
+
+SOULEYMAN is not a static course library. It is a **configurable tutoring engine**: every student, regardless of level, stream, or subject, is served by the same core product, with content, difficulty, and exercises driven by configuration — not by code written per subject.
+
+**Who it's for:** individual students (Brevet, Bac, Concours) studying independently, families wanting affordable native-language support, and schools/NGOs deploying tutoring at scale across a class or region.
+
+---
+
+## 2. Why SOULEYMAN is different
+
+| # | Differentiator | What it means in practice |
+|---|---|---|
+| 01 | **Native Hassaniya teaching** | Explanations are generated directly in Hassaniya by Dimeyz — even for subjects taught at school in Standard Arabic or French — not machine-translated. |
+| 02 | **Level × subject × chapter precision** | The same topic (e.g. "functions" in math) is taught differently for Brevet vs. Bac. SOULEYMAN's knowledge base is structured to reflect that, not flattened by subject alone. |
+| 03 | **Production-language exercises** | For French and English, methodology is explained in Hassaniya, but exercises and corrections are done in the target language itself — mirroring real exam conditions. |
+| 04 | **Voice-first accessibility** | Students can ask questions out loud and get a spoken answer back, powered entirely by Alborda's own Dimeyz Speech — no reliance on third-party ASR/TTS. |
+| 05 | **"Explain it differently"** | A single tap gets a fresh explanation with a new analogy or example, instead of repeating the same wording. |
+| 06 | **Exam-condition simulations** | Past-paper style tests run under real exam constraints (timed, graded), not just open-ended Q&A. |
+| 07 | **Data sovereignty & child safety by design** | No student data trains third-party models; strict moderation and parental consent are built into the core, not bolted on. |
+
+---
+
+## 3. How it works — architecture overview
+
+```
+                         ┌─────────────────────────────┐
+                         │   Student channels             │
+                         │   Mobile App · Web · WhatsApp*  │
+                         └──────────────┬────────────────┘
+                                        │
+                              Pedagogical Orchestration Layer
+                    (progress tracking · level/subject/chapter routing ·
+                                adaptive difficulty)
+                                        │
+                    ┌───────────────────┼───────────────────┐
+                    │                   │                   │
+          Voice question?      Text / written question   Exercise request
+                    ▼                   ▼                   ▼
+          ┌────────────────┐   ┌─────────────┐   ┌──────────────────────┐
+          │ Dimeyz Speech   │   │  RAG layer   │   │ Exercise/Quiz         │
+          │ (ASR)           │   │ (curriculum  │   │ Generator + Auto-     │
+          │                 │   │  per level/  │   │ Correction Engine     │
+          │                 │   │  subject)    │   │                       │
+          └────────┬────────┘   └──────┬──────┘   └───────────┬───────────┘
+                   └─────────┬──────────┘                      │
+                             ▼                                 │
+                   ┌───────────────────┐                       │
+                   │   Dimeyz (LLM)      │◄──────────────────────┘
+                   │ Hassaniya generation│
+                   └─────────┬───────────┘
+                             │
+             Voice channel?  │  Text channel
+                   ┌─────────┴─────────┐
+                   ▼                   ▼
+         ┌──────────────────┐   ┌─────────────┐
+         │ Dimeyz Speech     │   │  Direct      │
+         │ (TTS)             │   │  reply       │
+         └────────┬──────────┘   └──────┬──────┘
+                  └──────────┬───────────┘
+                             ▼
+                 ┌───────────────────────────────┐
+                 │   Progress & Reporting            │
+                 │  · Mastery status updated          │
+                 │  · Weak points logged               │
+                 │  · Parent report queued (n8n)        │
+                 └───────────────────────────────┘
+```
+
+*WhatsApp access shares the same channel infrastructure built for SIDI.*
+
+Every stage is decoupled: the orchestration layer knows the student's level and history, the LLM knows nothing about the channel, and the curriculum knowledge base is scoped per level × subject × chapter. This is what lets new subjects or exam types be added through configuration, not a product rebuild.
+
+---
+
+## 4. Core components
+
+| Component | Role |
 |---|---|
-| Mathematics | Brevet, Bac, Concours |
-| Physics | Brevet, Bac, Concours |
-| French | Brevet, Bac, Concours |
-| English | Brevet, Bac, Concours |
-| Life & Earth Sciences (SVT) | Brevet, Bac, Concours |
-
-Students set their level (and stream, for Bac students) when they create their profile, and all explanations and exercises are calibrated accordingly.
-
----
-
-## Key Features
-
-### 📚 Native Hassaniya Teaching
-Every concept is explained in the student's mother tongue — even subjects normally taught at school in Standard Arabic or French. Technical and scientific vocabulary is explained in Hassaniya, with the official term also provided so students stay exam-ready.
-
-### ✏️ Adaptive Exercises & Quizzes
-SOULEYMAN generates exercises matched to the student's current chapter and difficulty level. Every quiz is self-corrected with a full explanation of the right answer — not just "correct" or "incorrect."
-
-### 📈 Progress Tracking
-SOULEYMAN keeps a running record of mastered chapters, recurring weak points, and full result history — so every session builds on the last.
-
-### 🎯 Exam Preparation
-Targeted revision based on identified weaknesses, past-paper style exam simulations under real exam conditions (timing, grading scale), and practical exam-taking strategy — not just subject content.
-
-### 🎙️ Voice Mode
-Students can ask questions out loud in Hassaniya and receive a spoken explanation back — ideal for students more comfortable speaking than writing, powered entirely by Alborda's own Dimeyz Speech engine.
-
-### 🔁 "Explain It Differently"
-If a student doesn't understand an explanation, one tap gets them a fresh explanation with a different approach — a new analogy or example — instead of the same answer repeated.
-
-### 👨‍👩‍👧 Parent Progress Reports
-Parents automatically receive a summary of their child's activity — subjects studied, weak points, time spent — building trust and demonstrating the value of the service.
-
-### 🌐 Built for Real Conditions
-SOULEYMAN is optimized for low or unstable network connections, with a text-first mode when bandwidth is limited — designed for reliable use beyond Nouakchott.
+| **Dimeyz** | Proprietary LLM natively trained on Hassaniya Arabic. Generates all explanations, in the student's native language. |
+| **Dimeyz Speech** | ASR/TTS module powering voice mode — for students more comfortable speaking than writing. |
+| **Pedagogical Orchestration Layer** | Tracks each student's progress, routes to the right level/subject/chapter, and adapts exercise difficulty in real time. |
+| **Exercise & Quiz Generator** | Produces leveled exercises and self-corrected quizzes with full explanations, not just right/wrong. |
+| **RAG Layer** | Retrieves official curriculum content, past papers, and exam-style questions structured by level, stream, subject, and chapter. |
+| **Supabase (self-hosted)** | Stores student profiles, progress, results, and session history under full data sovereignty. |
+| **n8n Automation** | Generates and delivers periodic progress reports to parents and schools. |
 
 ---
 
-## Data Sovereignty & Child Safety
+## 5. Supported levels, subjects & modes
 
-SOULEYMAN was built with two non-negotiable principles:
-
-- **Data Sovereignty**: No student data — text, voice, results, or personal information — is processed or stored by third-party providers. All AI processing runs on Alborda AI's own infrastructure.
-- **Child Protection**: As most SOULEYMAN users are minors, the platform includes parental consent at account creation, no student-to-student messaging of any kind, strict content moderation across all explanations, and a read-only parent dashboard focused on progress — never exposing the private content of a student's learning sessions.
+**Levels:** `BREVET` · `BAC` (by stream) · `CONCOURS`
+**Subjects:** `MATHEMATICS` · `PHYSICS` · `FRENCH` · `ENGLISH` · `LIFE & EARTH SCIENCES (SVT)`
+**Modes:** `TEXT` · `VOICE` · `EXAM SIMULATION`
 
 ---
 
-## Plans
+## 6. Plans & feature flags
 
-| Plan | Price | Includes |
+| Plan | Price | Feature flags unlocked |
 |---|---|---|
 | **Discovery** | Free | Limited daily access, text mode only |
-| **Monthly** | 250 MRU/month | Full access, all subjects, voice mode, progress tracking |
+| **Monthly** | 250 MRU/month | Full subject access, voice mode, progress tracking |
 | **Annual** | 2,400 MRU/year | Same as Monthly, billed yearly |
-| **School** | Custom quote | Multi-student access, school dashboard, class-wide analytics |
+| **School** | Custom quote | Multi-student accounts, school/class dashboard, aggregated analytics |
+
+Feature flags (voice access, quotas, dashboard visibility) are modeled at the subscription/tenant level, on the same underlying architecture shared with SIDI — no per-student or per-school forked logic.
 
 ---
 
-## Why SOULEYMAN
+## 7. Data, security & child protection principles
 
-SOULEYMAN isn't a translated course library — it's a tutor built from the ground up for the Mauritanian student, in the Mauritanian student's own language, addressing a gap no international AI product currently covers: quality, affordable, native-language education support, accessible anywhere in the country.
+- **No third-party training on student data.** All learning interactions stay within Alborda's own infrastructure.
+- **Self-hosted core infrastructure** (Supabase, orchestration) for full control over data residency.
+- **PII scrubbing and encryption at rest**, with reinforced minimization given that most users are minors.
+- **Parental consent required** at account creation for minor students.
+- **No student-to-student messaging** of any kind — SOULEYMAN is an individual learning tool, never a social feature.
+- **Strict content moderation** across all explanations, examples, and analogies.
+- **Read-only parental dashboard** on progress only — private student-AI exchanges are never exposed, except in case of a flagged concern.
 
 ---
 
-**Product by Alborda AI**
-Democratizing AI for underrepresented languages across MENA.
+## 8. Roadmap highlights
 
-Contact: contact@alborda.ai · alborda.ai
+- Written-answer correction (photo or text submission for essay-style questions)
+- Personalized pre-exam revision planning based on time available and weak points
+- Gamification (badges, streaks) without competitive student rankings
+- Offline mode for low-connectivity regions, with progress sync on reconnect
+- School dashboard for class-wide performance insights
+- Diaspora offering for Mauritanian families abroad
+
+---
+
+## 9. About Alborda AI
+
+Founded in 2024 in Mauritania, Alborda AI is an international AI company democratizing artificial intelligence for underrepresented languages across the Middle East and North Africa (MENA). We develop language models and personalize them for a wide range of tasks, so millions can access advanced AI natively — in their own language, not a borrowed one.
+
+**Products:** Dimeyz (LLM) · SIDI (B2B support agent) · MOUNA (executive assistant) · SOULEYMAN (AI tutor) · Dimeyz Chat (consumer chat)
+
+---
+
+## 10. Contact
+
+📧 [contact@alborda.ai](mailto:contact@alborda.ai)
+🌐 [alborda.ai](https://alborda.ai)
+
+---
+
+<div align="center">
+<sub>© 2026 Alborda AI — Building AI that speaks your language.</sub>
+</div>
